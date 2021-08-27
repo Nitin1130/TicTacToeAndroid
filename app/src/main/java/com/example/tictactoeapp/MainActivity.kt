@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
 
-    var PLAYER = true
+    var PLAYER_X = true
     var TURN_COUNT = 0
     var boardStatus = Array(3){IntArray(3)}
     lateinit var board: Array<Array<Button>>
@@ -32,61 +32,49 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         initializeBoardStatus()
 
         resetBtn.setOnClickListener {
+
+            PLAYER_X = true
             TURN_COUNT = 0
-            PLAYER = true
             initializeBoardStatus()
         }
     }
 
-    private fun initializeBoardStatus() {
-        for(i in 0..2) {
-            for(j in 0..2) {
-                boardStatus[i][j] == -1
-            }
-        }
 
-        for(i in board) {
-            for(button in i) {
-                button.isEnabled = true
-                button.text = ""
-            }
-        }
-    }
 
     override fun onClick(view: View) {
         when(view.id) {
             R.id.button -> {
-                updateValue(row = 0, col = 0, player = PLAYER)
+                updateValue(row = 0, col = 0, player = PLAYER_X)
             }
             R.id.button2 -> {
-                updateValue(row = 0, col = 1, player = PLAYER)
+                updateValue(row = 0, col = 1, player = PLAYER_X)
             }
             R.id.button3 -> {
-                updateValue(row = 0, col = 2, player = PLAYER)
+                updateValue(row = 0, col = 2, player = PLAYER_X)
             }
             R.id.button4 -> {
-                updateValue(row = 1, col = 0, player = PLAYER)
+                updateValue(row = 1, col = 0, player = PLAYER_X)
             }
             R.id.button5 -> {
-                updateValue(row = 1, col = 1, player = PLAYER)
+                updateValue(row = 1, col = 1, player = PLAYER_X)
             }
             R.id.button6 -> {
-                updateValue(row = 1, col = 2, player = PLAYER)
+                updateValue(row = 1, col = 2, player = PLAYER_X)
             }
             R.id.button7 -> {
-                updateValue(row = 2, col = 0, player = PLAYER)
+                updateValue(row = 2, col = 0, player = PLAYER_X)
             }
             R.id.button8 -> {
-                updateValue(row = 2, col = 1, player = PLAYER)
+                updateValue(row = 2, col = 1, player = PLAYER_X)
             }
             R.id.button9 -> {
-                updateValue(row = 2, col = 2, player = PLAYER)
+                updateValue(row = 2, col = 2, player = PLAYER_X)
             }
         }
         TURN_COUNT++
-        PLAYER = !PLAYER
+        PLAYER_X = !PLAYER_X
 
-        if(PLAYER) {
+        if(PLAYER_X) {
             updateDisplay("Player X Turn")
         }else {
             updateDisplay("Player 0 Turn")
@@ -155,6 +143,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         displayTv.text = text
         if(text.contains("Winner")) {
             disableButton()
+        } else {
+
         }
     }
 
@@ -175,5 +165,20 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         boardStatus[row][col] = value
+    }
+
+    private fun initializeBoardStatus() {
+        for(i in 0..2) {
+            for(j in 0..2) {
+                boardStatus[i][j] == -1
+            }
+        }
+
+        for(i in board) {
+            for(button in i) {
+                button.isEnabled = true
+                button.text = ""
+            }
+        }
     }
 }
